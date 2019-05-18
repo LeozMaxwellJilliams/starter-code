@@ -47,6 +47,7 @@ const renderMaterialRows = (row = {}) => {
     </TableRow>
   )
 }
+
 // const BasicTable = ({ data }) => {
 //   return (
 //     <table className="basic-table">
@@ -61,6 +62,7 @@ const renderMaterialRows = (row = {}) => {
 //     </table>
 //   )
 // }
+
 const styles = theme => ({
   root: {
     width: '100%',
@@ -103,7 +105,6 @@ class BasicTable extends React.Component {
             </TableBody>
           </Table>
         </div>
-        
       </Paper>
     )
   }

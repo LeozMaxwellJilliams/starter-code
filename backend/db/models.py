@@ -1,6 +1,7 @@
 from sqlalchemy import inspect
 from sqlalchemy.orm.properties import ColumnProperty
-
+import pdb
+from flask import redirect
 from . import db
 
 
@@ -32,3 +33,20 @@ class RecycledMaterial(db.Model):
             if isinstance(column, ColumnProperty):
                 formatted[field] = attr
         return formatted
+
+    def add_data(data):
+        row = RecycledMaterial(
+            teacher=data['teacher'], 
+            aluminum=data['aluminum'], 
+            batteries=data['batteries'], 
+            bottles=data['bottles'],
+            cans=data['cans'],
+            cardboard=data['cardboard'],
+            computer_parts=data['computer_parts'],
+            glass=data['glass'],
+            paper=data['paper'],
+            wood=data['wood'],
+            textiles=data['textiles'])
+        db.session.add(row)
+        db.session.commit()
+        return redirect('http://localhost:3000/')
