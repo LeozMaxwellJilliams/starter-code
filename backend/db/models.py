@@ -18,6 +18,7 @@ class RecycledMaterial(db.Model):
     glass = db.Column(db.Integer)
     paper = db.Column(db.Integer)
     wood = db.Column(db.Integer)
+    textiles = db.Column(db.Integer)
 
     def to_dict(self):
         cls = type(self)

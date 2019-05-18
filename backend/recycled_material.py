@@ -13,7 +13,8 @@ class RecycledMaterial:
         'computer_parts',
         'glass',
         'paper',
-        'wood'
+        'wood',
+        'textiles',
     ]
 
     def write_to_firebase_from_csv(self, filename):
@@ -35,7 +36,7 @@ class RecycledMaterial:
         """
         The row should have the following columns:
         Classroom, Aluminum, Batteries, Bottles, Cans, Cardboard,
-        Computer Parts, Glass, Paper, Wood
+        Computer Parts, Glass, Paper, Wood, Textiles
         """
         data = {}
         for i in range(len(self.RECYCLED_MATERIAL_TYPES)):
