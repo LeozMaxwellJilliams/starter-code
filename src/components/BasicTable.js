@@ -3,12 +3,17 @@ import PropTypes from 'prop-types';
 
 import './BasicTable.scss';
 
+// let ordering = ['Id', 'Teacher', 'Score', 'Paper', 'Wood', 'Glass', 'Aluminum',
+//   'Batteries', 'Bottles', 'Cans', 'Cardboard', 'Computer Parts']
+
 /**
  * "Get" specifies a generic return
  * @param {*} object data element; see typing in the PropTypes
  */
 const getTableHeaders = (object = {}) => {
-  return Object.keys(object);
+  return Object.keys(object).map(
+    (header, i) => header[0].toUpperCase() + header.slice(1)
+  );
 }
 
 /**
@@ -32,7 +37,7 @@ const BasicTable = ({ data }) => {
         <tr>
           {getTableHeaders(data[0]).map(
             headerName => <th key={headerName}>{headerName}</th>
-            )}
+          )}
         </tr>
         {data.map(renderRows)}
       </tbody>

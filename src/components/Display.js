@@ -3,8 +3,6 @@
  */
 import React from 'react';
 import BasicTable from './BasicTable';
-import firebase from 'firebase';
-import 'firebase/firestore';
 
 import './Display.scss';
 
@@ -21,27 +19,17 @@ class Display extends React.Component {
     fetch('/recycling-data')
       .then(res => res.json())
       .then(json => {
+        json = json.map((cls, i) => { 
+          delete cls.id
+          cls.score = Object.values(cls).reduce((acc, value) => {
+            if (typeof value !== "string") return acc + value;
+            else return acc
+          }, 0)
+          return cls})
+        console.log(json.sort((a, b) => b.score - a.score))
         this.setState({ dataPostgres: json });
         this.props.loadData(json)
       });
-  }
-
-  fetchDataFirebase = () => {
-    const fdb = firebase.firestore();
-    fdb
-      .collection("recycled_material")
-      .get()
-      .then(snapshot => {
-        const data = {};
-        snapshot
-          .forEach(entry => {
-            data[entry.id] = entry.data();
-          })
-        this.setState({ dataFirebase: data })
-      })
-      .catch(e => {
-        console.error("something went wrong", e)
-      })
   }
 
   /**
@@ -56,16 +44,9 @@ class Display extends React.Component {
   render() {
     return (
       <div className="display-container">
-        <h2>Local Data Handling</h2>
         <BasicTable data={this.state.dataPostgres} />
-        <h2>Global Data Handling</h2>
-        <BasicTable  data={this.props.storeData} />
-        <h2>Firebase Data (json)</h2>
-        {
-          Object.entries(this.state.dataFirebase).length === 0
-            ? "**Firebase not set up**"
-            : JSON.stringify(this.state.dataFirebase, null, 2)
-        }
+        <h2>{"Current Leader"}</h2>
+        <BasicTable data={this.state.dataPostgres.slice(0, 1)} />
       </div>
     )
   }
