@@ -59,9 +59,9 @@ class Display extends React.Component {
     return (
       <div className="display-container">
         <BasicTable data={this.state.dataPostgres} />
-        <h2>{"Current Leader"}</h2>
+        <h2 style={{textAlign: 'center'}}>{"Current Leader"}</h2>
         <BasicTable data={this.state.dataPostgres.slice(0, 1)} />
-        <h2> {"Top 3 Classes"} </h2>
+        <h2 style={{textAlign: 'center'}}> {"Top 3 Classes"} </h2>
         <BasicTable data={this.state.dataLeaders}/>
       </div>
     )
