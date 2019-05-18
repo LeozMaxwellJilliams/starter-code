@@ -92,6 +92,7 @@ class BasicTable extends React.Component {
     return (
       <Paper className={classes.root}>
         <div className={classes.tableWrapper} overflowX="auto">
+        <form action = "http://localhost:5000/add-recycling-data" method = "POST">
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
@@ -102,8 +103,24 @@ class BasicTable extends React.Component {
             </TableHead>
             <TableBody>
               {data.map(renderMaterialRows)}
+              <TableRow>
+                <TableCell align="right"><input type = "number" name = "aluminum" /></TableCell>
+                <TableCell align="right"><input type = "number" name = "batteries" /></TableCell>
+                <TableCell align="right"><input type = "number" name = "bottles" /></TableCell>
+                <TableCell align="right"><input type ="number" name = "cans" /></TableCell>
+                <TableCell align="right"><input type ="number" name = "cardboard" /></TableCell>
+                <TableCell align="right"><input type ="number" name = "computer_parts" /></TableCell>
+                <TableCell align="right"><input type ="number" name = "glass" /></TableCell>
+                <TableCell align="right"><input type ="number" name = "paper" /></TableCell>
+                <TableCell align="right"><input type ="text" name = "teacher" /></TableCell>
+                <TableCell align="right"><input type ="number" name = "textiles" /></TableCell>
+                <TableCell align="right"><input type ="number" name = "wood" /></TableCell>
+                <TableCell align="right"><input type = "submit" value = "Add new row" /></TableCell>
+              </TableRow>
             </TableBody>
           </Table>
+          
+        </form>
         </div>
       </Paper>
     )
