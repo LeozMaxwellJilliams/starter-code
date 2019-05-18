@@ -11,6 +11,7 @@ class Display extends React.Component {
     super(props);
     this.state = {
       dataPostgres: [],
+      dataLeaders: [],
       dataFirebase: {}
     };
   }
@@ -26,8 +27,21 @@ class Display extends React.Component {
             else return acc
           }, 0)
           return cls})
-        console.log(json.sort((a, b) => b.score - a.score))
-        this.setState({ dataPostgres: json });
+        json.sort((a, b) => b.score - a.score)
+        let dataLeaders = JSON.parse(JSON.stringify(json)).slice(0, 3)
+        dataLeaders = dataLeaders.map((cls, i) => {
+          delete cls.teacher
+          return cls
+        })
+        let temp = JSON.parse(JSON.stringify(json))
+        for (const category in dataLeaders[0]) {
+            temp.sort((a, b) => b[category] - a[category])
+            for (const x of Array(3).keys()) {
+              dataLeaders[x][category] = temp[x].teacher
+            }
+        }
+        this.setState({ dataLeaders: dataLeaders })
+        this.setState({ dataPostgres: json })
         this.props.loadData(json)
       });
   }
@@ -47,6 +61,8 @@ class Display extends React.Component {
         <BasicTable data={this.state.dataPostgres} />
         <h2>{"Current Leader"}</h2>
         <BasicTable data={this.state.dataPostgres.slice(0, 1)} />
+        <h2> {"Top 3 Classes"} </h2>
+        <BasicTable data={this.state.dataLeaders}/>
       </div>
     )
   }
