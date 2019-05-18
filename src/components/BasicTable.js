@@ -1,5 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
 
 import './BasicTable.scss';
 
@@ -15,6 +22,7 @@ const getTableHeaders = (object = {}) => {
  * "render" specifies JSX in the return 
  * @param {*} row data element
  */
+
 const renderRows = (row = {}) => {
   return (
     <tr key={row.id}>
@@ -25,22 +33,68 @@ const renderRows = (row = {}) => {
   )
 }
 
-const BasicTable = ({ data }) => {
+const renderMaterialRows = (row = {}) => {
   return (
-    <table className="basic-table">
-      <tbody>
-        <tr>
-          {getTableHeaders(data[0]).map(
-            headerName => <th key={headerName}>{headerName}</th>
-            )}
-        </tr>
-        {data.map(renderRows)}
-      </tbody>
-    </table>
+    <TableRow key={row.id}>
+      {Object.values(row).map(
+        (value, i) => <TableCell align="right" key={i}>{value}</TableCell>
+      )}
+    </TableRow>
   )
 }
+// const BasicTable = ({ data }) => {
+//   return (
+//     <table className="basic-table">
+//       <tbody>
+//         <tr>
+//           {getTableHeaders(data[0]).map(
+//             headerName => <th key={headerName}>{headerName}</th>
+//             )}
+//         </tr>
+//         {data.map(renderRows)}
+//       </tbody>
+//     </table>
+//   )
+// }
+const styles = theme => ({
+  root: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+  },
+  table: {
+    minWidth: 1020,
+  },
+  tableWrapper: {
+    // overflowX: 'off',
+  },
+});
 
-export default BasicTable;
+const BasicTable = ({ data}) => {
+    // const { classes } = props;
+    console.log("data", data)
+    return (
+      <Paper className={styles.root}>
+        <div className={styles.tableWrapper} overflowX="auto">
+          <Table className={styles.table}>
+            <TableHead>
+              <TableRow>
+                {getTableHeaders(data[0]).map(
+                  headerName => <TableCell key={headerName}>{headerName}</TableCell>
+                )}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.map(renderMaterialRows)}
+            </TableBody>
+          </Table>
+        </div>
+        
+      </Paper>
+
+    )
+}
+
+export default withStyles(styles)(BasicTable);
 
 /**
  * Much more substantial example of typing properties. If the data does not align to the type, an error will occur.
@@ -64,5 +118,6 @@ BasicTable.propTypes = {
 };
 
 BasicTable.defaultProps = {
-  data: []
+  data: [],
+  classes: PropTypes.object.isRequired
 };
