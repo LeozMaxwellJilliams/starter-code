@@ -70,17 +70,27 @@ const styles = theme => ({
     minWidth: 1020,
   },
   tableWrapper: {
-    // overflowX: 'off',
+    overflowX: 'auto',
   },
 });
 
-const BasicTable = ({ data}) => {
-    // const { classes } = props;
-    console.log("data", data)
+class BasicTable extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      data: this.data,
+    } 
+  }
+
+  render(){
+
+    const { classes, data} = this.props;
+
+    console.log(classes);
     return (
-      <Paper className={styles.root}>
-        <div className={styles.tableWrapper} overflowX="auto">
-          <Table className={styles.table}>
+      <Paper className={classes.root}>
+        <div className={classes.tableWrapper} overflowX="auto">
+          <Table className={classes.table}>
             <TableHead>
               <TableRow>
                 {getTableHeaders(data[0]).map(
@@ -95,9 +105,33 @@ const BasicTable = ({ data}) => {
         </div>
         
       </Paper>
-
     )
+  }
 }
+// const BasicTable = ({ data}) => {
+//     // const { classes } = props;
+//     console.log("data", data)
+    // return (
+    //   <Paper className={styles.root}>
+    //     <div className={styles.tableWrapper} overflowX="auto">
+    //       <Table className={styles.table}>
+    //         <TableHead>
+    //           <TableRow>
+    //             {getTableHeaders(data[0]).map(
+    //               headerName => <TableCell key={headerName}>{headerName}</TableCell>
+    //             )}
+    //           </TableRow>
+    //         </TableHead>
+    //         <TableBody>
+    //           {data.map(renderMaterialRows)}
+    //         </TableBody>
+    //       </Table>
+    //     </div>
+        
+    //   </Paper>
+
+    // )
+// }
 
 export default withStyles(styles)(BasicTable);
 
