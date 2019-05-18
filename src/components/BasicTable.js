@@ -10,12 +10,17 @@ import { withStyles } from '@material-ui/core/styles';
 
 import './BasicTable.scss';
 
+// let ordering = ['Id', 'Teacher', 'Score', 'Paper', 'Wood', 'Glass', 'Aluminum',
+//   'Batteries', 'Bottles', 'Cans', 'Cardboard', 'Computer Parts']
+
 /**
  * "Get" specifies a generic return
  * @param {*} object data element; see typing in the PropTypes
  */
 const getTableHeaders = (object = {}) => {
-  return Object.keys(object);
+  return Object.keys(object).map(
+    (header, i) => header[0].toUpperCase() + header.slice(1)
+  );
 }
 
 /**
